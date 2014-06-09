@@ -122,7 +122,7 @@ public class VentanaContactos extends JFrame {
 				//2.- Crearemos un nuevo objeto delincuente
 				Contactos c=new Contactos();
 				int ID=0;
-				ID=datos.insertarDelincuentes((nombre.getText()), Integer.parseInt(numero.getText()), Integer.parseInt(direccion.getText()));
+				ID=datos.insertarContactos((nombre.getText()), Integer.parseInt(numero.getText()),(apellidos.getText()),(direccion.getText()));
 				c.setNombre(nombre.getText());
 				c.setNumero(Integer.parseInt(numero.getText()));
 				c.setApellidos(apellidos.getText());
@@ -147,12 +147,11 @@ public class VentanaContactos extends JFrame {
 		JButton botonModificar = new JButton("Modificar");
 		botonModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				datos.modificaContactos(Integer.parseInt(textID.getText()),nombre.getText(), Integer.parseInt(numero.getText()), Integer.parseInt(direccion.getText()));
+				datos.modificaContactos(Integer.parseInt(textID.getText()),nombre.getText(), Integer.parseInt(numero.getText()), (apellidos.getText()), (direccion.getText()));
 				contactos.setNombre(nombre.getText());
 				contactos.setNumero(Integer.parseInt(numero.getText()));
 				contactos.setApellidos(apellidos.getText());
 				contactos.setDireccion(String.valueOf(direccion.getText()));
-				
 				
 
 			}
