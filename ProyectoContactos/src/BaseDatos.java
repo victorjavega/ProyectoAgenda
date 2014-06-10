@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import javax.swing.JComboBox;
 
 public class BaseDatos {
@@ -24,7 +25,7 @@ public class BaseDatos {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			// establece la conexión a la base de datos
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/fichadelincuentes","root","tonphp");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/fichacontactos","root","tonphp");
 
 		}catch( SQLException excepcionSql ){
 			excepcionSql.printStackTrace();
@@ -41,17 +42,17 @@ public class BaseDatos {
 		// crea objeto Statement para consultar la base de datos
 					instruccion = (Statement) conexion.createStatement();
 					// consulta la base de datos
-					conjuntoResultados = instruccion.executeQuery("SELECT ID,NombreYapellidos,Edad,Altura,Crimen FROM delincuentes");
+					conjuntoResultados = instruccion.executeQuery("SELECT nombre,numero,apellidos,direccion,iD FROM contactos");
 					//Mostrar por pantalla
 					while (conjuntoResultados.next())
 					{
 					   System.out.println("id="+conjuntoResultados.getObject("ID")+
-					      ", Nombre="+conjuntoResultados.getObject("NombreYapellidos"));
+					      ", Nombre="+conjuntoResultados.getObject("nombre"));
 					   Contactos c=new Contactos((String)conjuntoResultados.getObject("nombre"),
 							   							(int)conjuntoResultados.getObject("numero"),
 							   							(String)conjuntoResultados.getObject("apellidos"),
 							   							(String)conjuntoResultados.getObject("direccion"),
-							   							(int)conjuntoResultados.getObject("ID"));
+							   							(int)conjuntoResultados.getObject("iD"));
 
 
 					   listadoContactos.addItem(c);
@@ -73,10 +74,9 @@ public class BaseDatos {
 		}
 		// insercion en base de datos
 		try {
-			String sql="INSERT INTO `fichadelincuentes`.`delincuentes` (`nombre`, `numero`, `apellidos`, `direccion`) VALUES ("
+			String sql="INSERT INTO `fichacontactos`.`contactos` (`nombre`, `numero`, `apellidos`, `direccion`) VALUES ("
 					+ 													"'"+nombre+"', '"+numero+"', '"+apellidos+"', '"+direccion+"');";
 			instruccion.executeUpdate(sql);
-
 			//PARA GUARDAR EL ID
 			sql = "SELECT * FROM contactos ORDER BY ID DESC LIMIT 1";
 			conjuntoResultados = instruccion.executeQuery(sql);
@@ -106,7 +106,7 @@ public class BaseDatos {
 			}
 			// insercion en base de datos
 			try {
-				String sql="UPDATE  `fichaContactos`.`contactos` SET "
+				String sql="UPDATE  `fichacontactos`.`contactos` SET "
 						+ "`nombre` ='"+nombre+"',"
 						+"`numero` =  '"+numero+"',"
 						+"`apellidos` =  '"+apellidos+"',"
@@ -127,7 +127,7 @@ public class BaseDatos {
 			}
 			// insercion en base de datos
 			try {
-				String sql="DELETE FROM `fichaContactos`.`con` WHERE  `con`.`ID` ="+ID+"";
+				String sql="DELETE FROM `fichacontactos`.`contactos` WHERE  `con`.`ID` ="+ID+"";
 				instruccion.executeUpdate(sql);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
